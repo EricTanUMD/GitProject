@@ -1,2 +1,6 @@
 This is the README File for the Final Project of Inst126
 THis project aims to cover webscraping while also knocking out the checklist requirements for the semester. 
+
+The idea for this project is to Use webscraping to get informations from Wikipedia into a CSV file and make it so the data can be sorted and catalogged. The user should be able to look into the statistics of this webpage https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue
+
+Projected functionalities include being able to access the that scraped for the rankings as well as using their data for other means. The user should be able to do things like getting the sum of all profits or find the max/min revenue per worker
