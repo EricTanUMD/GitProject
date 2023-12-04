@@ -23,7 +23,17 @@ titles = [title.text.strip() for title in base_titles] # remove </th> and new li
 df = pd.DataFrame(columns = titles) #create our dataframe with columns
 column_data = table.find_all('tr')
 
-# Extract the information of each row into a list of its own
+# Extract the information of each row into a list of its own, We will eventually turn this information into a dictionary and dataframe
+Companies = {
+    "rank": "",
+    "name": "",
+    "industry": "",
+    "revenue": "",
+    "revenue_growth": "",
+    "employees": "",
+    "headquarters": "" 
+}
+
 rank = []
 name = []
 industry = []
@@ -62,16 +72,23 @@ for row in column_data[1:]: #skip first blank row
 #print(headquarters)
 #print(len(rank) + len(name) + len(industry) + len(revenue) + len(revenue_growth) + len(employees) + len(headquarters))
 
-Companies = {
-    "rank": rank,
-    "name": name,
-    "industry": industry,
-    "revenue": revenue,
-    "revenue_growth": revenue_growth,
-    "employees": employees,
-    "headquarters": headquarters
-}
+# Update the values of the dictionary using update()
+Companies.update({"rank": tuple(rank),
+    "name": tuple(name),
+    "industry": tuple(industry),
+    "revenue": tuple(revenue),
+    "revenue_growth": tuple(revenue_growth),
+    "employees": tuple(employees),
+    "headquarters": tuple(headquarters)})
 
 data_frame = pd.DataFrame.from_dict(Companies)
-print(data_frame)
+#print(data_frame)
 data_frame.to_csv(os.getcwd() + '/df.csv', index = False) #import the constructed dataframe as a csv file!
+
+# If the User wants to see the dictionary, they can. Access both key and value in the dict to do so
+see_dict = input("View Company information?")
+if(see_dict == "yes".casefold()):
+    for key, value in Companies.items():
+        print(key, " ", value)
+else:
+    print("Ok, no issue")
