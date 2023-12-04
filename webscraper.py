@@ -1,5 +1,6 @@
 # This file serves to scrape informations of the wikipedia page that documents the largest companies in the United states by revenue.
-# This information will then be sequentially fed into a series of lists, a dictionary, and then be converted into a dataframe
+# This information will then be sequentially fed into a series of lists, a dictionary, and then be converted into a dataframe. The User may also
+# Peak into the dictionary if they so choice once the program is running.
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd

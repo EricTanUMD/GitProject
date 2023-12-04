@@ -1,5 +1,6 @@
 # This module makes use webscraper.py to give the user ways to access the information of the top companies by revenue in the USA
-# The program gives a series of prompts that the user can chose to select to access this information.
+# The program gives a series of prompts that the user can chose to select to access this information. A log of what was done will be printed out
+# to show the user their history.
 import webscraper as ws
 
 data_frame = ws.pd.read_csv('df.csv') #bring in the csv data exported from webscraper
