@@ -86,7 +86,7 @@ while (loop == True):
         upper_limit = int(input("Enter the highest rank you want to find revenue growth: "))
         print("placeholder")
     elif(): # Average revenue find
-        print("placeholder")
+        print("placeholders")
     else: # If the user fails to input anything, they will have up to 3 chances input a valid input
         counter += 1
         print("Invalid Input you have failed {} times. Program exits after 3 fails.".format(counter))
