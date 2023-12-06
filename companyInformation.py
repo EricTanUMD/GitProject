@@ -79,6 +79,8 @@ while (loop == True):
     elif(choice.casefold() == options[2].casefold()): # Employee Numbers
         lower_limit = int(input("Enter the lowest rank you want to find employee numbers: "))
         upper_limit = int(input("Enter the highest rank you want to find employee number: "))
+        result_log, result_num = find_employees(lower_limit, upper_limit)
+        print("Here are the employee numbers for the companies you specified {}. You searched through {} companies".format(result_log, result_num))
     elif(): # Revenue Growth
         print("placeholder")
     elif(): # Average revenue find
