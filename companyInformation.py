@@ -82,6 +82,8 @@ while (loop == True):
         result_log, result_num = find_employees(lower_limit, upper_limit)
         print("Here are the employee numbers for the companies you specified {}. You searched through {} companies".format(result_log, result_num))
     elif(): # Revenue Growth
+        lower_limit = int(input("Enter the lowest rank you want to find revenue growth: "))
+        upper_limit = int(input("Enter the highest rank you want to find revenue growth: "))
         print("placeholder")
     elif(): # Average revenue find
         print("placeholder")
