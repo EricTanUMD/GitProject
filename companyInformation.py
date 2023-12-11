@@ -1,17 +1,20 @@
 # This module makes use webscraper.py to give the user ways to access the information of the top companies by revenue in the USA
-# The program gives a series of prompts that the user can chose to select to access this information. A log of what was done will be printed out
-# to show the user their history.
+# The program gives a series of prompts that the user can chose to select to access this information. The user is give 5 options to look through
+# this data such as seeing rank, revenue, revenue growth, employee numbers, and average revenue. The user wil be given this list when opening
+# the program. From there, the user can use any of the 5 functions after inputing a lower and upper bound. The average revenue option asks
+# Another extra input in the form of a minimum revenue to give the user an option to further filter through their range. If the user doesn't
+# input a minimum, it is 0 by default which will cause no issue. Lastly, the program will exit if the user fails to input a valid option 3 times
 import webscraper as ws
 import numpy as np
 
 data_frame = ws.pd.read_csv('df.csv') #bring in the csv data exported from webscraper
-############################################################################################################]
-# Functions. All Returning tuples of results and the number of places searched
+############################################################################################################
+# Functions. All Rcorresponding with an option the user can choose. 
 def find_ranks(lower, upper):
     """ Finds the names of the companies with ranks between the specified lower and upper values. """
     if(lower <= 0):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
-    if(lower >= upper): # also an invalid range, in this case, we will simply adjust the range to only encompass the upper rank
+    if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
         lower = upper - 1
         print("Invalid range, adjusting lower limit.")
     
@@ -21,12 +24,13 @@ def find_ranks(lower, upper):
         names.append(company_name)
         counter += 1
     return names, counter
+
 # Searches through the revenues dictionary value for a user specified range. Though the tuple is 0 indexed, it accounts for it.
 def find_revenue(lower, upper):
     """ Find the revenues within the range of the ranks specified"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
-    if(lower >= upper): # also an invalid range, in this case, we will simply adjust the range to only encompass the upper rank
+    if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
         lower = upper - 1
         print("Invalid range, adjusting lower limit.")
     
@@ -36,12 +40,13 @@ def find_revenue(lower, upper):
         revenue.append(rev)
         counter += 1
     return revenue, counter
+
 # Search through the employees dictionary value within a user specified rank range. Returns the list of employee numbers within this range.
 def find_employees(lower, upper):
     """ Find the revenues within the range of the ranks specified"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
-    if(lower >= upper): # also an invalid range, in this case, we will simply adjust the range to only encompass the upper rank
+    if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
         lower = upper - 1
         print("Invalid range, adjusting lower limit.")
     employees = []
@@ -50,12 +55,13 @@ def find_employees(lower, upper):
         employees.append(emp)
         counter += 1
     return employees, counter
+
 # Search through the revenue growth dictionary value within a user specified rank range. Returns the list of revenue growth rates within this range.
 def find_revenue_growth(lower, upper):
     """ Find the revenue growths within the range of the ranks specified"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
-    if(lower >= upper): # also an invalid range, in this case, we will simply adjust the range to only encompass the upper rank
+    if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
         lower = upper - 1
         print("Invalid range, adjusting lower limit.")
     
@@ -66,10 +72,6 @@ def find_revenue_growth(lower, upper):
         counter += 1
     return rev_growth, counter
 
-def remove_from_list(lower, upper, list): #try to iteratively remove from the list
-    """ Removes everything from a list within the specified range of the list"""
-    
-    return 
 ################################################################################################################
 # Main Code
 loop = True
@@ -79,10 +81,11 @@ options = ("Find ranks",
            "Find revenue growth", 
            "Average revenue") #The user can only pick from these choices
 
-print("Welcome to the Company Ranking DataBase")
-result_log = []
+print("Welcome to the Company Ranking Database. ")
+result_log = [] # Store the results of each option in these two variables
 result_num = 0
 counter = 0
+upper_limit, lower_limit = 0, 0 # The bounds the user uses.
 while (loop == True):
     print("Here are your options, ", options)
     choice = input("What do you wish to do?: ")
@@ -101,12 +104,12 @@ while (loop == True):
         lower_limit = int(input("Enter the lowest rank you want to find employee numbers: "))
         upper_limit = int(input("Enter the highest rank you want to find employee number: "))
         result_log, result_num = find_employees(lower_limit, upper_limit)
-        print("Here are the employee numbers for the companies you specified {}. You searched through {} companies".format(result_log, result_num))
+        print("Here are the employee numbers for the companies you specified {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[3].casefold()): # Revenue Growth
         lower_limit = int(input("Enter the lowest rank you want to find revenue growth: "))
         upper_limit = int(input("Enter the highest rank you want to find revenue growth: "))
         result_log, result_num = find_revenue_growth(lower_limit, upper_limit)
-        print("Here are the revenue growth numbers within this range {}. You searched through {} companies".format(result_log, result_num))
+        print("Here are the revenue growth numbers within this range {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[4].casefold()): # Average revenue finder
         lower_limit = int(input("Enter the lowest rank you want to use for calculating the average: "))
         upper_limit = int(input("Enter the highest rank you want to use for calculating the average: "))
@@ -117,12 +120,12 @@ while (loop == True):
         if(input("Do you wish to set a minimum? ").casefold() == "yes".casefold()):
             minimum = float(input("Enter your minimum: "))
 
-        revenue_array = revenue_array[revenue_array > minimum]
+        revenue_array = revenue_array[revenue_array >= minimum]
         # print(revenue_array)
         result_log = revenue_array
         result_num = revenue_array.sum()/(len(revenue_array))
         print("Here is your list of revenues {} and your average revenue {}".format(result_log, result_num))
-    else: # If the user fails to input anything or a valid option, they will have up to 3 chances input a valid input
+    else: # If the user fails to input a valid option, they will have up to 3 chances input a valid input
         counter += 1
         print("Invalid Input you have failed {} times. Program exits after 3 fails.".format(counter))
 
@@ -135,11 +138,3 @@ while (loop == True):
     if (input("Do you want to do another function?: ") == "no".casefold()):
         loop = False
         print("Thanks for using this program, exiting now. ")
-
-
-
-
-##################################################################################################################
-# Tests
-#ranks, number = find_ranks(1, 10)
-#print(ranks)

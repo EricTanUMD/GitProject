@@ -1,13 +1,13 @@
 # This file serves to scrape informations of the wikipedia page that documents the largest companies in the United states by revenue.
-# This information will then be sequentially fed into a series of lists, a dictionary, and then be converted into a dataframe. The User may also
-# Peak into the dictionary if they so choice once the program is running.
+# This information will then be sequentially fed into a series of lists, a dictionary, and then be converted into a dataframe. This is mostly a backend for the companyInformation.py The only thing
+# The user needs to know is that this is where the information is being sourced from. 
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import os
 import re
 
-#Use Beautiful soup to specificly scrape the first chart for its information
+# Use Beautiful soup to specificly scrape the first chart for its information. We only scrape for the first chart containing the company information
 url = "https://en.wikipedia.org/wiki/List_of_largest_companies_in_the_United_States_by_revenue"
 print("This is our url to make the soup: " , url)
 page = requests.get(url)
@@ -20,7 +20,6 @@ table = soup.find_all('table')[1] #We found the table we want here
 base_titles = table.find_all('th') # we extract the tiles marked by </th>
 titles = [title.text.strip() for title in base_titles] # remove </th> and new lines, only a list of base strings remain
 
-# Pandas functionalities
 df = pd.DataFrame(columns = titles) #create our dataframe with columns
 column_data = table.find_all('tr')
 
