@@ -58,7 +58,7 @@ def find_employees(lower, upper):
 
 # Search through the revenue growth dictionary value within a user specified rank range. Returns the list of revenue growth rates within this range.
 def find_revenue_growth(lower, upper):
-    """ Find the revenue growths within the range of the ranks specified"""
+    """ Find the revenue growths within the range of the ranks specified. this means if lower = 1 and upper = 5, it finds all values between ranks 1 through 5"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
     if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
