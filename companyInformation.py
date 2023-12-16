@@ -11,7 +11,7 @@ data_frame = ws.pd.read_csv('df.csv') #bring in the csv data exported from websc
 ############################################################################################################
 # Functions. All Rcorresponding with an option the user can choose. 
 def find_ranks(lower, upper):
-    """ Finds the names of the companies with ranks between the specified lower and upper values. """
+    """ Find the revenues within the range of the ranks specified. this means if lower = 1 and upper = 5, it finds all values between ranks 1 through 5 """
     if(lower <= 0):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
     if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
@@ -27,7 +27,7 @@ def find_ranks(lower, upper):
 
 # Searches through the revenues dictionary value for a user specified range. Though the tuple is 0 indexed, it accounts for it.
 def find_revenue(lower, upper):
-    """ Find the revenues within the range of the ranks specified"""
+    """ Find the revenues within the range of the ranks specified. this means if lower = 1 and upper = 5, it finds all values between ranks 1 through 5"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
     if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
@@ -43,7 +43,7 @@ def find_revenue(lower, upper):
 
 # Search through the employees dictionary value within a user specified rank range. Returns the list of employee numbers within this range.
 def find_employees(lower, upper):
-    """ Find the revenues within the range of the ranks specified"""
+    """ Find the revenues within the range of the ranks specified. this means if lower = 1 and upper = 5, it finds all values between ranks 1 through 5"""
     if(lower <= 0 or upper > 100):
         raise Exception("Sorry no lower limit below 1 or upper limit above 100")
     if(lower >= upper): # also an invalid range but not as bad, in this case, we will simply adjust the range to only encompass the upper rank
@@ -89,30 +89,30 @@ upper_limit, lower_limit = 0, 0 # The bounds the user uses.
 while (loop == True):
     print("Here are your options, ", options)
     choice = input("What do you wish to do?: ")
-    # Handle each function depending on
+    # Handle each function depending on what the user enters.
     if(choice.casefold() == options[0].casefold()): # Find Ranks
-        lower_limit = int(input("Enter the lowest rank you want to find: "))
-        upper_limit = int(input("Enter the highest rank you want to find: "))
+        lower_limit = int(input("Enter the highest rank you want to find: ")) # it is stored as lower limit because of indexing. The highest rank is the lowest index.
+        upper_limit = int(input("Enter the lowest rank you want to find: ")) # The lowest rank is the highest index. 
         result_log, result_num = find_ranks(lower_limit, upper_limit)
         print("Here are the ranks in order: {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[1].casefold()): # Find Revenue
-        lower_limit = int(input("Enter the lowest rank you want to find revenue: "))
-        upper_limit = int(input("Enter the highest rank you want to find revenue: "))
+        lower_limit = int(input("Enter the highest rank you want to find revenue: "))
+        upper_limit = int(input("Enter the lowest rank you want to find revenue: "))
         result_log, result_num = find_revenue(lower_limit, upper_limit)
         print("Here are the revenues in millions USD in order from largest to smallest {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[2].casefold()): # Employee Numbers
-        lower_limit = int(input("Enter the lowest rank you want to find employee numbers: "))
-        upper_limit = int(input("Enter the highest rank you want to find employee number: "))
+        lower_limit = int(input("Enter the highest rank you want to find employee numbers: "))
+        upper_limit = int(input("Enter the lowest rank you want to find employee number: "))
         result_log, result_num = find_employees(lower_limit, upper_limit)
         print("Here are the employee numbers for the companies you specified {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[3].casefold()): # Revenue Growth
-        lower_limit = int(input("Enter the lowest rank you want to find revenue growth: "))
-        upper_limit = int(input("Enter the highest rank you want to find revenue growth: "))
+        lower_limit = int(input("Enter the highest rank you want to find revenue growth: "))
+        upper_limit = int(input("Enter the lowest rank you want to find revenue growth: "))
         result_log, result_num = find_revenue_growth(lower_limit, upper_limit)
         print("Here are the revenue growth numbers within this range {}. You searched through {} companies.".format(result_log, result_num))
     elif(choice.casefold() == options[4].casefold()): # Average revenue finder
-        lower_limit = int(input("Enter the lowest rank you want to use for calculating the average: "))
-        upper_limit = int(input("Enter the highest rank you want to use for calculating the average: "))
+        lower_limit = int(input("Enter the highest rank you want to use for calculating the average: "))
+        upper_limit = int(input("Enter the lowest rank you want to use for calculating the average: "))
         revenue_array = np.asarray(ws.Companies["revenue"][lower_limit - 1: upper_limit])
 
         minimum = 0
