@@ -74,7 +74,7 @@ def find_revenue_growth(lower, upper):
 
 ################################################################################################################
 # Main Code
-loop = True
+loop = True # This will perpetually stay true, we just need it around to loop until the user decides to break out of the loop/program
 options = ("Find ranks", 
            "Find revenue", 
            "Find employee number",
@@ -133,8 +133,8 @@ while (loop == True):
     if (counter == 3):
         print("Too many invalid inputs rerun the program and try again. ")
         break
-
-    #Note to self, you can convert a df column into an array
+    # Ask the user each time if they want to do another function. Break out of the loop if they don't want to do anything else
     if (input("Do you want to do another function?: ") == "no".casefold()):
-        loop = False
         print("Thanks for using this program, exiting now. ")
+        break
+       
